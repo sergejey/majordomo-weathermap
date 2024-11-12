@@ -1,0 +1,78 @@
+
+[#if OK#]
+<div class="alert alert-success"><#LANG_DATA_SAVED#></div>
+[#endif OK#]
+[#if ERR#]
+<div class="alert alert-danger"><#LANG_FILLOUT_REQURED#></div>
+[#endif ERR#]
+
+ <p>
+  <a href="?view_mode=<#VIEW_MODE#>&tab=<#TAB#>&id=<#ID#>&mode=refresh" class="btn btn-default"><i class="glyphicon glyphicon-refresh"></i> <#LANG_REFRESH#></a>
+ </p>
+
+<div class="row">
+ <div class="col-md-6">
+  <table class="table">
+   <tr>
+    <th><#LANG_TITLE#></a></th>
+    <th><#LANG_VALUE#></th>
+    <th><#LANG_UPDATED#></th>
+   </tr>
+   [#begin PROPERTIES#]
+   <tr>
+    <td><a href="?view_mode=<#VIEW_MODE#>&tab=<#TAB#>&id=<#ID#>&prop_id=[#ID#]">[#TITLE#]</a></td>
+    <td>[#VALUE#][#if URL!=""#]<br/><img src="[#VALUE#]">[#endif#]</td>
+    <td>[#UPDATED#]</td>
+   </tr>
+   [#end PROPERTIES#]
+  </table>
+ </div>
+ <div class="col-md-6">
+
+  [#if PROP_ID!=""#]
+  <form class="form" action="?" method="post">
+   <h4>[#PROP_TITLE#]</h4>
+   <p>weathermap.<#ID#>.[#PROP_TITLE#]</p>
+   <div class="form-group">
+    <label><#LANG_LINKED_OBJECT#>:</label>
+    <div>
+     <input type="text" id="linked_object" name="linked_object" class="form-control" value="[#PROP_LINKED_OBJECT#]">
+    </div>
+   </div>
+   <div class="form-group">
+    <label><#LANG_PROPERTY#>:</label>
+    <div>
+     <input type="text" id="linked_property" name="linked_property" class="form-control" value="[#PROP_LINKED_PROPERTY#]">
+    </div>
+   </div>
+   <div class="form-group">
+    <label><#LANG_METHOD#>:</label>
+    <div>
+     <input type="text" id="linked_method" name="linked_method" class="form-control" value="[#PROP_LINKED_METHOD#]">
+    </div>
+   </div>
+
+   [#module name="linkedobject" object_field="linked_object" property_field="linked_property" method_field="linked_method"#]
+
+
+   <div class="form-group">
+    <input type="submit" class="btn btn-default btn-primary" value="<#LANG_SUBMIT#>">
+   </div>
+   <input type="hidden" name="id" value="<#ID#>">
+   <input type="hidden" name="view_mode" value="<#VIEW_MODE#>">
+   <input type="hidden" name="tab" value="<#TAB#>">
+   <input type="hidden" name="prop_id" value="<#PROP_ID#>">
+   <input type="hidden" name="mode" value="update">
+  </form>
+  <p>Use in templates:<br/>
+  <code>%weathermap.<#ID#>.[#PROP_TITLE#]%</code>
+  </p>
+  <p>Use in code:<br/>
+<pre>$data = getGlobal('weathermap.<#ID#>.[#PROP_TITLE#]');
+$data = gg('weathermap.<#ID#>.[#PROP_TITLE#]');</pre>
+  </p>
+  [#endif PROP_ID#]
+
+ </div>
+</div>
+

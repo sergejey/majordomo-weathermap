@@ -1,0 +1,82 @@
+
+<!-- table zwave_devices search -->
+[#if API_KEY!=""#]
+<div>
+ [ <a href="#" onClick="$('#api_settings').toggle();return false;"><#LANG_SETUP#></a> ]
+</div>
+[#endif#]
+<div [#if API_KEY!=""#]style="display:none"[#endif#] id='api_settings'>
+&nbsp;
+<form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form">
+<fieldset>
+<div class="form-group">
+ <label class="control-label"[#if ERR_API_KEY#] style="color:red;font-weight:bold"[#endif#]>
+ API KEY:
+ (*)
+ </label>
+ <div class="controls"><input type="text" name="api_key" value="[#API_KEY#]" class="form-control"></div>
+</div>
+<div class="form-actions">
+<button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_UPDATE#></button>
+<input type="hidden" name="view_mode" value="update_settings">
+<input type="hidden" name="mode" value="update">
+</div>
+</fieldset>
+</form>
+</div>
+&nbsp;
+ <!-- action usual -->
+ [#if DATA_SOURCE="weathermap_locations" || DATA_SOURCE=""#]
+ <!-- table weathermap_locations search -->
+ [#if VIEW_MODE="search_weathermap_locations" || VIEW_MODE=""#]
+  [#inc weathermap_locations_search_admin.html#]
+ [#endif VIEW_MODE#]
+ <!-- / table weathermap_locations search -->
+ <!-- table weathermap_locations edit -->
+ [#if VIEW_MODE="edit_weathermap_locations"#]
+   [#if ID!=""#]
+   [#if TITLE!=""#]<h4>[#TITLE#]</h4>[#endif TITLE#]
+<ul class="nav nav-tabs">
+  <li[#if TAB=""#] class="active"[#endif#]>
+   <a href="?data_source=<#DATA_SOURCE#>&view_mode=<#VIEW_MODE#>&id=<#ID#>&tab="><#LANG_GENERAL#></a>
+  </li>
+  <li[#if TAB="data"#] class="active"[#endif#]>
+   <a href="?data_source=<#DATA_SOURCE#>&view_mode=<#VIEW_MODE#>&id=<#ID#>&tab=data">&#060#LANG_DATA#&#062</a>
+  </li>
+</ul>
+&nbsp;<br/>
+   [#endif ID#]
+   [#if TAB=""#]
+    [#inc weathermap_locations_edit_default.html#]
+   [#endif TAB#]
+   [#if TAB="data"#]
+    [#inc weathermap_locations_edit_data.html#]
+   [#endif TAB#]
+ [#endif VIEW_MODE#]
+ <!-- / table weathermap_locations edit -->
+ <!-- table weathermap_locations view --> 
+ [#if VIEW_MODE="view_weathermap_locations"#]
+   [#if TAB=""#]
+    [#inc weathermap_locations_view_default.html#]
+   [#endif TAB#]
+ [#endif VIEW_MODE#]
+ <!-- / table weathermap_locations view -->
+ [#endif DATA_SOURCE#]
+ <!-- action usual -->
+ [#if DATA_SOURCE="weathermap_properties"#]
+ <!-- table weathermap_properties search -->
+ [#if VIEW_MODE="search_weathermap_properties" || VIEW_MODE=""#]
+  [#inc weathermap_properties_search_admin.html#]
+ [#endif VIEW_MODE#]
+ <!-- / table weathermap_properties search -->
+ <!-- table weathermap_properties edit -->
+ [#if VIEW_MODE="edit_weathermap_properties"#]
+   [#inc weathermap_properties_edit.html#]
+ [#endif VIEW_MODE#]
+ <!-- / table weathermap_properties edit -->
+ <!-- table weathermap_properties view --> 
+ [#if VIEW_MODE="view_weathermap_properties"#]
+   [#inc weathermap_properties_view.html#]
+ [#endif VIEW_MODE#]
+ <!-- / table weathermap_properties view -->
+ [#endif DATA_SOURCE#]
