@@ -203,11 +203,17 @@ class weathermap extends module
         $lat = $location['LAT'];
         $lon = $location['LON'];
 
+
+        $lang = SETTINGS_SITE_LANGUAGE;
+        if ($lang == 'default') {
+            $lang = 'en';
+        }
+
         $cache_file = ROOT . 'cms/cached/weathermap_' . $location['ID'] . '_weather.txt';
         if (file_exists($cache_file) && (time() - filemtime($cache_file)) < 1 * 60) {
             $weather_data = LoadFile($cache_file);
         } else {
-            $weather_data = getURL("https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=" . $api . "&units=metric");
+            $weather_data = getURL("https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=" . $api . "&units=metric&lang=".$lang);
             if ($weather_data != '') {
                 SaveFile($cache_file, $weather_data);
             }
@@ -221,7 +227,7 @@ class weathermap extends module
         if (file_exists($cache_file) && (time() - filemtime($cache_file)) < 1 * 60) {
             $forecast_data = LoadFile($cache_file);
         } else {
-            $forecast_data = getURL("https://api.openweathermap.org/data/2.5/forecast?lat=$lat&lon=$lon&appid=" . $api . "&units=metric");
+            $forecast_data = getURL("https://api.openweathermap.org/data/2.5/forecast?lat=$lat&lon=$lon&appid=" . $api . "&units=metric&lang=".$lang);
             if ($forecast_data != '') {
                 SaveFile($cache_file, $forecast_data);
             }
@@ -480,6 +486,7 @@ class weathermap extends module
  weathermap_properties: WEATHER_LOCATION_ID int(10) NOT NULL DEFAULT '0'
  weathermap_properties: LINKED_OBJECT varchar(100) NOT NULL DEFAULT ''
  weathermap_properties: LINKED_PROPERTY varchar(100) NOT NULL DEFAULT ''
+ weathermap_properties: LINKED_METHOD varchar(100) NOT NULL DEFAULT ''
  weathermap_properties: UPDATED datetime
 EOD;
         parent::dbInstall($data);

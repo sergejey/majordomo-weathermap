@@ -11,23 +11,25 @@
  </p>
 
 <div class="row">
- <div class="col-md-6">
+ <div class="col-md-7">
   <table class="table">
    <tr>
     <th><#LANG_TITLE#></a></th>
     <th><#LANG_VALUE#></th>
+    <th><#LANG_LINKED_OBJECT#></th>
     <th><#LANG_UPDATED#></th>
    </tr>
    [#begin PROPERTIES#]
    <tr>
     <td><a href="?view_mode=<#VIEW_MODE#>&tab=<#TAB#>&id=<#ID#>&prop_id=[#ID#]">[#TITLE#]</a></td>
     <td>[#VALUE#][#if URL!=""#]<br/><img src="[#VALUE#]">[#endif#]</td>
+    <td>[#if LINKED_OBJECT!=""#][#LINKED_OBJECT#].[#LINKED_PROPERTY#][#endif#]</td>
     <td>[#UPDATED#]</td>
    </tr>
    [#end PROPERTIES#]
   </table>
  </div>
- <div class="col-md-6">
+ <div class="col-md-5">
 
   [#if PROP_ID!=""#]
   <form class="form" action="?" method="post">

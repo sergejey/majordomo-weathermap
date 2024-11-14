@@ -7,7 +7,7 @@ if ($this->owner->name == 'panel') {
 }
 $table_name = 'weathermap_locations';
 $rec = SQLSelectOne("SELECT * FROM $table_name WHERE ID='$id'");
-if ($this->mode == 'update') {
+if ($this->mode == 'update' && $this->tab == '') {
     $ok = 1;
     // step: default
     if ($this->tab == '') {
@@ -22,9 +22,6 @@ if ($this->mode == 'update') {
         //updating 'LON' (varchar)
         $rec['LON'] = gr('lon');
         //updating '<%LANG_UPDATED%>' (datetime)
-    }
-    // step: data
-    if ($this->tab == 'data') {
     }
     //UPDATING RECORD
     if ($ok) {
@@ -71,7 +68,6 @@ if ($this->tab == 'data') {
                 $properties[$i]['LINKED_PROPERTY'] = gr('linked_property', 'trim');
                 $properties[$i]['LINKED_METHOD'] = gr('linked_method', 'trim');
                 SQLUpdate('weathermap_properties', $properties[$i]);
-
                 if ($properties[$i]['LINKED_OBJECT'] && $properties[$i]['LINKED_PROPERTY']) {
                     addLinkedProperty($properties[$i]['LINKED_OBJECT'], $properties[$i]['LINKED_PROPERTY'], $this->name);
                 } elseif ($old_linked_object && $old_linked_property && function_exists('removeLinkedPropertyIfNotUsed')) {
