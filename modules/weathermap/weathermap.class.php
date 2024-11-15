@@ -252,7 +252,7 @@ class weathermap extends module
         $properties['fact_wind'] = $data['wind']['speed'];
         $properties['fact_wind_direction'] = $data['wind']['deg'];
         $properties['fact_wind_dir_text'] = getWindDirection(round($data['wind']['deg'], $round));
-		$properties['fact_wind_dir_full'] = getWindDirection(round($data['wind']['deg'], $round), true);
+	$properties['fact_wind_dir_full'] = getWindDirection(round($data['wind']['deg'], $round), true);
         $properties['fact_visibility'] = $data['visibility'];
         $properties['fact_sunrise'] = date('H:i', ($data['sys']['sunrise']));
         $properties['fact_sunset'] = date('H:i', ($data['sys']['sunset']));
@@ -309,7 +309,7 @@ class weathermap extends module
                     $properties[$day_title . '_wind'] = $rec['wind']['speed'];
                     $properties[$day_title . '_wind_direction'] = $rec['wind']['deg'];
                     $properties[$day_title . '_wind_dir_text'] = getWindDirection(round($data['wind']['deg'], $round));
-					$properties[$day_title . '_wind_dir_full'] = getWindDirection(round($data['wind']['deg'], $round), true);
+		    $properties[$day_title . '_wind_dir_full'] = getWindDirection(round($data['wind']['deg'], $round), true);
                     $properties[$day_title . '_visibility'] = $rec['visibility'];
                 }
                 //echo $diff_hours." ($diff_days $hour)<br/>";
