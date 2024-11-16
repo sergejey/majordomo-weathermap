@@ -251,8 +251,8 @@ class weathermap extends module
         $properties['fact_humidity'] = $data['main']['humidity'];
         $properties['fact_wind'] = $data['wind']['speed'];
         $properties['fact_wind_direction'] = $data['wind']['deg'];
-        $properties['fact_wind_dir_text'] = getWindDirection(round($data['wind']['deg'], $round));
-	$properties['fact_wind_dir_full'] = getWindDirection(round($data['wind']['deg'], $round), true);
+        $properties['fact_wind_dir_text'] = $this->getWindDirection(round($data['wind']['deg'], $round));
+	    $properties['fact_wind_dir_full'] = $this->getWindDirection(round($data['wind']['deg'], $round), true);
         $properties['fact_visibility'] = $data['visibility'];
         $properties['fact_sunrise'] = date('H:i', ($data['sys']['sunrise']));
         $properties['fact_sunset'] = date('H:i', ($data['sys']['sunset']));
@@ -308,8 +308,8 @@ class weathermap extends module
                     $properties[$day_title . '_humidity'] = $rec['main']['humidity'];
                     $properties[$day_title . '_wind'] = $rec['wind']['speed'];
                     $properties[$day_title . '_wind_direction'] = $rec['wind']['deg'];
-                    $properties[$day_title . '_wind_dir_text'] = getWindDirection(round($data['wind']['deg'], $round));
-		    $properties[$day_title . '_wind_dir_full'] = getWindDirection(round($data['wind']['deg'], $round), true);
+                    $properties[$day_title . '_wind_dir_text'] = $this->getWindDirection(round($data['wind']['deg'], $round));
+		            $properties[$day_title . '_wind_dir_full'] = $this->getWindDirection(round($data['wind']['deg'], $round), true);
                     $properties[$day_title . '_visibility'] = $rec['visibility'];
                 }
                 //echo $diff_hours." ($diff_days $hour)<br/>";
@@ -318,6 +318,64 @@ class weathermap extends module
         foreach ($properties as $k => $v) {
             $this->processProperty($location_id, $k, $v);
         }
+    }
+
+    /**
+	* Get wind direction name by direction in degree
+	* @param mixed $degree Wind degree
+	* @return string
+	*/
+    function getWindDirection($degree, $full=false)
+    {
+	if (SETTINGS_SITE_LANGUAGE && file_exists(ROOT . 'languages/' . 'weathermap_' .SETTINGS_SITE_LANGUAGE . '.php'))
+	{
+		include_once (ROOT . 'languages/' . 'weathermap_' .SETTINGS_SITE_LANGUAGE . '.php');
+	} else {
+		include_once (ROOT . 'languages/'.'weathermap_default.php');
+	}
+	if($full) {
+		$windDirection = array(
+			LANG_OW_WIND_FULL_N,
+			LANG_OW_WIND_FULL_NNE,
+			LANG_OW_WIND_FULL_NE,
+			LANG_OW_WIND_FULL_ENE,
+			LANG_OW_WIND_FULL_E,
+			LANG_OW_WIND_FULL_ESE,
+			LANG_OW_WIND_FULL_SE,
+			LANG_OW_WIND_FULL_SSE,
+			LANG_OW_WIND_FULL_S,
+			LANG_OW_WIND_FULL_SSW,
+			LANG_OW_WIND_FULL_SW,
+			LANG_OW_WIND_FULL_WSW,
+			LANG_OW_WIND_FULL_W,
+			LANG_OW_WIND_FULL_WNW,
+			LANG_OW_WIND_FULL_NW,
+			LANG_OW_WIND_FULL_NNW,
+			LANG_OW_WIND_FULL_N
+		);
+	} else {
+		$windDirection = array(
+			LANG_N,
+			LANG_NNE,
+			LANG_NE,
+			LANG_ENE,
+			LANG_E,
+			LANG_ESE,
+			LANG_SE,
+			LANG_SSE,
+			LANG_S,
+			LANG_SSW,
+			LANG_SW,
+			LANG_WSW,
+			LANG_W,
+			LANG_WNW,
+			LANG_NW,
+			LANG_NNW,
+			LANG_N
+		);
+	}
+    $direction = $windDirection[round(intval($degree) / 22.5)];
+    return $direction;
     }
 
     function processProperty($location_id, $property, $value)
