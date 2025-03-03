@@ -308,8 +308,8 @@ class weathermap extends module
                     $properties[$day_title . '_humidity'] = $rec['main']['humidity'];
                     $properties[$day_title . '_wind'] = $rec['wind']['speed'];
                     $properties[$day_title . '_wind_direction'] = $rec['wind']['deg'];
-                    $properties[$day_title . '_wind_dir_text'] = $this->getWindDirection(round($data['wind']['deg'], $round));
-		            $properties[$day_title . '_wind_dir_full'] = $this->getWindDirection(round($data['wind']['deg'], $round), true);
+                    $properties[$day_title . '_wind_dir_text'] = $this->getWindDirection(round($rec['wind']['deg'], $round));
+		            $properties[$day_title . '_wind_dir_full'] = $this->getWindDirection(round($rec['wind']['deg'], $round), true);
                     $properties[$day_title . '_visibility'] = $rec['visibility'];
                 }
                 //echo $diff_hours." ($diff_days $hour)<br/>";
