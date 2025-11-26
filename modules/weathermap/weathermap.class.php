@@ -316,6 +316,7 @@ class weathermap extends module
             }
         }
         foreach ($properties as $k => $v) {
+            if ($v == '') continue;
             $this->processProperty($location_id, $k, $v);
         }
     }
